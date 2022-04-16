@@ -37,15 +37,14 @@ void BasicAccDecoderPacket_Handler(int address, boolean activate, byte data) {
         servo[i].servo.attach(servo[i].servoPin);
       }
       if (enable)
-      { 
+      {
         servo[i].dccstate = 1;
-servo[i].setpoint = servo[i].onangle;
+        servo[i].setpoint = servo[i].onangle;
       }
       else
-      { 
-                servo[i].dccstate = 0;
+      {
+        servo[i].dccstate = 0;
         servo[i].setpoint = servo[i].offangle;
-
       }
 
       servo[i].detachcnt = 0;
@@ -75,7 +74,7 @@ void setup() {
   servo[1].onangle   = 210 ; // Servo angle for DCC state = 1
   servo[1].detachcnt = 0;
 
-  //SV3 
+  //SV3
   servo[2].address   =   3;
   servo[2].servoPin  =   10;
   servo[2].servo.attach(10); // Arduino servo pin
