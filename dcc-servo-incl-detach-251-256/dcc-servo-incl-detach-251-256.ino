@@ -1,5 +1,6 @@
-#define NUMSERVOS   6 // Enter the number of servos here
-#define SERVOSPEED  100 // [ms] between servo updates, lower is faster
+#define NUMSERVOS   8 // Enter the number of servos here
+#define SERVOSPEED  50 // [ms] between servo updates, lower is faster
+#define SERVO_DETACH_CNT  1000 / SERVOSPEED
 
 // GO TO setup() TO CONFIGURE DCC ADDRESSES, PIN NUMBERS, SERVO ANGLES
 
@@ -16,6 +17,7 @@ typedef struct  {
   byte  offangle;  // User Configurable servo angle for DCC state = 0
   byte  onangle;   // User Configurable servo angle for DCC state = 1
   byte  servoPin;
+  byte  detachcnt;
   Servo servo;
 } DCCAccessoryData;
 
@@ -35,11 +37,18 @@ void BasicAccDecoderPacket_Handler(int address, boolean activate, byte data) {
         servo[i].servo.attach(servo[i].servoPin);
       }
       if (enable)
-      { servo[i].dccstate = 1;
+      { 
+        servo[i].dccstate = 1;
+servo[i].setpoint = servo[i].onangle;
       }
       else
-      { servo[i].dccstate = 0;
+      { 
+                servo[i].dccstate = 0;
+        servo[i].setpoint = servo[i].offangle;
+
       }
+
+      servo[i].detachcnt = 0;
     }
   }
 }
@@ -50,54 +59,72 @@ void setup() {
   // The amount must be same as NUMSERVOS
   // Don't forget to increment the array index
 
-  //SV6
-  servo[0].address   =   6 ; // DCC address
-  servo[0].servoPin  =   11 ;
-  servo[0].servo.attach( 11); // Arduino servo pin
+  //SV1
+  servo[0].address   =   1; //DCC address
+  servo[0].servoPin  =   8  ;
+  servo[0].servo.attach( 8 ); // Arduino servo pin
   servo[0].offangle  =  90 ; // Servo angle for DCC state = 0
   servo[0].onangle   = 200 ; // Servo angle for DCC state = 1
-
-  //SV5
-  servo[1].address   =   5 ; // This is an accessory without servo
-  servo[1].servoPin  =   7  ;
-  servo[1].servo.attach( 7 ); // Arduino servo pin
-  servo[1].offangle  =  70 ; // Servo angle for DCC state = 0
-  servo[1].onangle   = 210 ; // Servo angle for DCC state = 1
-
-  //Sv4
-  servo[2].address   =  4 ;
-  servo[2].servoPin  =   6 ;
-  servo[2].servo.attach( 6); // Arduino servo pin
-  servo[2].offangle  =  60 ; // Servo angle for DCC state = 0
-  servo[2].onangle   = 200 ; // Servo angle for DCC state = 1
-
-  //SV3
-  servo[3].address   =  3 ;
-  servo[3].servoPin  =   5 ;
-  servo[3].servo.attach( 5); // Arduino servo pin
-  servo[3].offangle  =  70 ; // Servo angle for DCC state = 0
-  servo[3].onangle   = 200 ; // Servo angle for DCC state = 1
+  servo[0].detachcnt = 0;
 
   //SV2
-  servo[4].address   =   2 ;
-  servo[4].servoPin  =  4 ;
-  servo[4].servo.attach( 4); // Arduino servo pin
-  servo[4].offangle  =  90 ; // Servo angle for DCC state = 0
-  servo[4].onangle   = 225 ; // Servo angle for DCC state = 1
+  servo[1].address   =   2 ; // This is an accessory without servo
+  servo[1].servoPin  =   9;
+  servo[1].servo.attach( 9); // Arduino servo pin
+  servo[1].offangle  =  70 ; // Servo angle for DCC state = 0
+  servo[1].onangle   = 210 ; // Servo angle for DCC state = 1
+  servo[1].detachcnt = 0;
 
-  //SV1
-  servo[5].address   =   1 ;
-  servo[5].servoPin  =   3 ;
-  servo[5].servo.attach(3); // Arduino servo pin
-  servo[5].offangle  =  80 ; // Servo angle for DCC state = 0
-  servo[5].onangle   = 120 ; // Servo angle for DCC state = 1
+  //SV3 
+  servo[2].address   =   3;
+  servo[2].servoPin  =   10;
+  servo[2].servo.attach(10); // Arduino servo pin
+  servo[2].offangle  =  13 ; // Servo angle for DCC state = 0
+  servo[2].onangle   = 0 ; // Servo angle for DCC state = 1
+  servo[2].detachcnt = 0;
 
+  //SV4
+  servo[3].address   =  4 ;
+  servo[3].servoPin  =   11 ;
+  servo[3].servo.attach( 11); // Arduino servo pin
+  servo[3].offangle  =  14 ; // Servo angle for DCC state = 0
+  servo[3].onangle   = 0 ; // Servo angle for DCC state = 1
+  servo[3].detachcnt = 0;
+
+  //SV5
+  servo[4].address   =   5 ;
+  servo[4].servoPin  =  12 ;
+  servo[4].servo.attach(12); // Arduino servo pin
+  servo[4].offangle  =  5 ; // Servo angle for DCC state = 0
+  servo[4].onangle   = 25 ; // Servo angle for DCC state = 1
+  servo[4].detachcnt = 0;
+
+  //SV6
+  servo[5].address   =   6 ;
+  servo[5].servoPin  =   13 ;
+  servo[5].servo.attach(13); // Arduino servo pin
+  servo[5].offangle  = 33; // Servo angle for DCC state = 0
+  servo[5].onangle   = 12; // Servo angle for DCC state = 1
+  servo[5].detachcnt = 0;
+
+  //SV7
+  servo[4].address   =   7 ;
+  servo[4].servoPin  =  18 ;
+  servo[4].servo.attach(18); // Arduino servo pin
+  servo[4].offangle  =  5 ; // Servo angle for DCC state = 0
+  servo[4].onangle   = 25 ; // Servo angle for DCC state = 1
+  servo[4].detachcnt = 0;
+
+  //SV8
+  servo[5].address   =   8 ;
+  servo[5].servoPin  =   19 ;
+  servo[5].servo.attach(19); // Arduino servo pin
+  servo[5].offangle  = 33; // Servo angle for DCC state = 0
+  servo[5].onangle   = 12; // Servo angle for DCC state = 1
+  servo[5].detachcnt = 0;
 
   DCC.SetBasicAccessoryDecoderPacketHandler(BasicAccDecoderPacket_Handler, true);
   DCC.SetupDecoder( 0x00, 0x00, 0 );
-
-  pinMode(4, OUTPUT); 
-  digitalWrite(4, LOW);
 
   for (byte i = 0; i < NUMSERVOS; i++) {
     servo[i].angle = servo[i].offangle;
@@ -105,25 +132,11 @@ void setup() {
     servo[i].dccstate = 0;
     servo[i].setpoint = servo[i].angle;
   }
-
-   digitalWrite(4, HIGH);
-
-   Serial.begin(57600);
-   Serial.println("DCC Servo");
 }
 
 void loop() {
 
   DCC.loop(); // Call to library function that reads the DCC data
-
-  for (byte i = 0; i < NUMSERVOS; i++) {
-    if (servo[i].dccstate == 1) {
-      servo[i].setpoint = servo[i].onangle;
-    }
-    else {
-      servo[i].setpoint = servo[i].offangle;
-    }
-  }
 
   // Move the servos when it is timetomove
   if (millis() > timetomove) {
@@ -139,54 +152,24 @@ void loop() {
         servo[i].angle--;
       }
 
-                Serial.print("Angle : ");
-          Serial.print(i);
-          Serial.print(" ");
-          Serial.print(servo[i].angle);
-          Serial.print(" ");
-
       if (servo[i].angle != servo[i].setpoint)
       {
         servo[i].servo.write(servo[i].angle);
       }
       else
       {
-          /*Serial.print("SP : ");
-          Serial.print(i);
-          Serial.print(" ");
-          Serial.print(servo[i].setpoint);
-          Serial.print(" ");
-          Serial.print(servo[i].angle);
-          Serial.print(" ");*/
-
-        if (servo[i].setpoint == servo[i].onangle)
-        {
-          servo[i].setpoint = servo[i].offangle;
-          Serial.print("Set : ");
-          Serial.println(servo[i].setpoint);
-
-          /*Serial.print("Off : ");
-          Serial.print(i);
-          Serial.print(" ");
-          Serial.println(servo[i].setpoint);*/
-        }
-        else
-        {
-          servo[i].setpoint = servo[i].onangle;
-          Serial.print("Set : ");
-          Serial.println(servo[i].setpoint);
-
-          /*Serial.print("On : ");
-          Serial.print(i);
-          Serial.print(" ");
-          Serial.println(servo[i].setpoint);*/
-        }
         // Servo in position, switch off.
-        /*if (servo[i].servo.attached())
+        servo[i].detachcnt++;
+        if (servo[i].detachcnt >= SERVO_DETACH_CNT)
         {
-          servo[i].servo.detach();
-          digitalWrite(servo[i].servoPin, HIGH);
-        }*/
+          servo[i].detachcnt = SERVO_DETACH_CNT;
+          if (servo[i].servo.attached())
+          {
+
+            servo[i].servo.detach();
+            digitalWrite(servo[i].servoPin, HIGH);
+          }
+        }
       }
     }
   }
