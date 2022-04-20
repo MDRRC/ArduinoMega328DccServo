@@ -9,14 +9,18 @@
  **********************************************************************************************************************/
 #define NUMSERVOS 8   // Enter the number of servos here
 #define SERVOSPEED 50 // [ms] between servo updates, lower is faster
-#define SERVO_DETACH_CNT 1000 / SERVOSPEED
+#define SERVO_DETACH_CNT 500 / SERVOSPEED
 #define RUN_LED_TIME 1000
 #define RUN_LED_PIN 4
 
 #define CV_SERVO_DATA_START 30
 #define CV_DECODER_MASTER_RESET 120
 
-unsigned long timetomove;
+#define ENABLE_DEBUG 0
+
+/**
+ * Typedef struct for servo data.
+ */
 
 typedef struct
 {
@@ -30,9 +34,9 @@ typedef struct
     Servo servo;
 } DCCAccessoryData;
 
-NmraDcc Dcc;
-DCC_MSG Packet;
-
+/**
+ * Typedef struct for CV data storage.
+ */
 struct CVPair
 {
     uint16_t CV;
@@ -87,23 +91,30 @@ CVPair FactoryDefaultCVs [] =
   {58,	8},  	// Acc decoder number 8
   {59,	2}, 	// Servo 8 position minimum.
   {60,120}, 	// Servo 8 position maximum.
-  {61, 19}, 	// Servo 1 pin.
+  {61, 19}, 	// Servo 8 pin.
 };
 // clang-format on
 
-DCCAccessoryData servo[NUMSERVOS];
-uint32_t RunLedTimer;
-bool RunLedLevel;
+bool RunLedLevel                = true;
+bool PerformResetFactoryDefault = false;
+uint32_t RunLedTimer            = millis();
+unsigned long timetomove        = 0;
+uint8_t FactoryDefaultCVIndex   = 0;
 
-uint8_t FactoryDefaultCVIndex = 0;
+DCCAccessoryData servo[NUMSERVOS];
+NmraDcc Dcc;
+DCC_MSG Packet;
+
+void (*ResetFunc)(void) = 0;
 
 /***********************************************************************************************************************
+ * Make FactoryDefaultCVIndex non-zero and equal to num CV's to be reset to flag to the loop() function that a
+ * reset to Factory Defaults needs to be done
  */
 void notifyCVResetFactoryDefault()
 {
-    // Make FactoryDefaultCVIndex non-zero and equal to num CV's to be reset
-    // to flag to the loop() function that a reset to Factory Defaults needs to be done
-    FactoryDefaultCVIndex = sizeof(FactoryDefaultCVs) / sizeof(CVPair);
+    FactoryDefaultCVIndex      = sizeof(FactoryDefaultCVs) / sizeof(CVPair);
+    PerformResetFactoryDefault = true;
 }
 
 /***********************************************************************************************************************
@@ -129,11 +140,6 @@ void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, ui
     {
         if (Addr == servo[Index].address)
         {
-            Serial.print(Addr);
-            Serial.print(" ");
-            Serial.print(Enable);
-            Serial.println(" ");
-
             if (servo[Index].servo.attached() == false)
             {
                 servo[Index].servo.attach(servo[Index].servoPin);
@@ -179,7 +185,7 @@ void RunLed()
 
 /***********************************************************************************************************************
  */
-void CheckForCvUpdate()
+void CheckForCvChanges()
 {
     uint8_t Index;
 
@@ -213,12 +219,9 @@ void setup()
 {
     uint8_t Index;
 
-    RunLedLevel = true;
     RunLedTimer = millis();
     pinMode(RUN_LED_PIN, OUTPUT);
     digitalWrite(RUN_LED_PIN, HIGH);
-
-    Serial.begin(115200);
 
     for (Index = 0; Index < NUMSERVOS; Index++)
     {
@@ -230,14 +233,6 @@ void setup()
         servo[Index].setpoint = servo[Index].angle;
         servo[Index].servo.write(servo[Index].angle);
         servo[Index].servo.attach(servo[Index].servoPin);
-
-        Serial.print(servo[Index].address);
-        Serial.print(" ");
-        Serial.print(servo[Index].offangle);
-        Serial.print(" ");
-        Serial.print(servo[Index].onangle);
-        Serial.print(" ");
-        Serial.println(servo[Index].servoPin);
 
         // After initial power on EEPROM contains 255, write CV value sinto EEPROM.
         // This prohibits the use of address 255.
@@ -274,11 +269,22 @@ void loop()
             RunLedLevel = false;
             digitalWrite(RUN_LED_PIN, LOW);
         }
+
+        // Small delay so led flashes fast indicating cv reset
+        delay(100);
     }
     else
     {
-        RunLed();
-        CheckForCvUpdate();
+        if (PerformResetFactoryDefault == true)
+        {
+            // Reset to apply default Cv values.
+            ResetFunc();
+        }
+        else
+        {
+            RunLed();
+            CheckForCvChanges();
+        }
     }
 
     // Move the servos when it is timetomove
@@ -303,7 +309,7 @@ void loop()
             }
             else
             {
-                // Servo in position, switch off.
+                // Servo in position, switch off after some time.
                 servo[i].detachcnt++;
                 if (servo[i].detachcnt >= SERVO_DETACH_CNT)
                 {
