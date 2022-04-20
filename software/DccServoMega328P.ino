@@ -100,35 +100,46 @@ void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, ui
 {
     State          = State;
     BoardAddr      = BoardAddr;
-    boolean enable = false;
+    boolean Enable = false;
+    boolean Found  = false;
+    uint8_t Index  = 0;
 
     switch (OutputAddr)
     {
     case 1:
     case 3:
     case 5:
-    case 7: enable = true; break;
+    case 7: Enable = true; break;
     default: break;
     }
 
-    for (int i = 0; i < NUMSERVOS; i++)
+    while ((Found == false) && (Index < NUMSERVOS))
     {
-        if (Addr == servo[i].address)
+        if (Addr == servo[Index].address)
         {
-            if (servo[1].servo.attached() == false)
+            Serial.print(Addr);
+            Serial.print(" ");
+            Serial.print(Enable);
+            Serial.println(" ");
+
+            if (servo[Index].servo.attached() == false)
             {
-                servo[i].servo.attach(servo[i].servoPin);
+                servo[Index].servo.attach(servo[Index].servoPin);
             }
-            if (enable)
+            if (Enable)
             {
-                servo[i].setpoint = servo[i].onangle;
+                servo[Index].setpoint = servo[Index].onangle;
             }
             else
             {
-                servo[i].setpoint = servo[i].offangle;
+                servo[Index].setpoint = servo[Index].offangle;
             }
 
-            servo[i].detachcnt = 0;
+            servo[Index].detachcnt = 0;
+        }
+        else
+        {
+            Index++;
         }
     }
 }
@@ -151,6 +162,8 @@ void RunLed()
         }
     }
 }
+
+void CheckForCvUpdate() {}
 
 void setup()
 {
@@ -182,6 +195,8 @@ void setup()
         Serial.print(" ");
         Serial.println(servo[Index].servoPin);
 
+        // After initial power on EEPROM contains 255, write CV value sinto EEPROM.
+        // This prohibits the use of address 255.
         if (servo[Index].address == 255)
         {
             notifyCVResetFactoryDefault();
@@ -217,6 +232,7 @@ void loop()
     else
     {
         RunLed();
+        CheckForCvUpdate();
     }
 
     // Move the servos when it is timetomove
