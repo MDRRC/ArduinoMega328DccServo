@@ -270,7 +270,7 @@ void loop()
             digitalWrite(RUN_LED_PIN, LOW);
         }
 
-        // Small delay so led flashes fast indicating cv reset
+        // Small delay so led flashes fast indicating cv reset is going on.
         delay(100);
     }
     else
