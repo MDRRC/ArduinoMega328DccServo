@@ -163,10 +163,10 @@ environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.DTS
 environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.DTS/value=3600
 environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.LOCAL/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.LOCAL/operation=replace
-environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.LOCAL/value=1650227015
+environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.LOCAL/value=1650487164
 environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.UTC/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.UTC/operation=replace
-environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.UTC/value=1650219815
+environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.UTC/value=1650479964
 environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.ZONE/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.ZONE/operation=replace
 environment/project/io.sloeber.core.toolChain.release.313029778/A.EXTRA.TIME.ZONE/value=3600
@@ -205,13 +205,13 @@ environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.AR.PATT
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.AR.PATTERN/value="${A.COMPILER.PATH}${A.COMPILER.AR.CMD}" ${A.COMPILER.AR.FLAGS} ${A.COMPILER.AR.EXTRA_FLAGS} "${A.ARCHIVE_FILE_PATH}" "${A.OBJECT_FILE}"
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN.1/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN.1/operation=replace
-environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN.1/value="C\:\\Tools\\sloeber\\/arduinoPlugin/packages/arduino/tools/avr-gcc/5.4.0-atmel3.6.1-arduino2/bin/avr-gcc" -Wall -Wextra -Os -g -flto -fuse-linker-plugin -Wl,--gc-sections -mmcu\=atmega328p -o "C\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\dcc-servo-incl-detach-251-256/Release/DccServoMega328P.elf" 
+environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN.1/value="C\:\\Tools\\sloeber\\/arduinoPlugin/packages/arduino/tools/avr-gcc/5.4.0-atmel3.6.1-arduino2/bin/avr-gcc" -Wall -Wextra -Os -g -flto -fuse-linker-plugin -Wl,--gc-sections -mmcu\=atmega328p -o "C\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\software/Release/DccServoMega328P.elf" 
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN.2/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN.2/operation=replace
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN.2/value=\ 
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN.3/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN.3/operation=replace
-environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN.3/value=\ "-LC\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\dcc-servo-incl-detach-251-256/Release" -lm
+environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN.3/value=\ "-LC\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\software/Release" -lm
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN/operation=replace
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.C.COMBINE.PATTERN/value="${A.COMPILER.PATH}${A.COMPILER.C.ELF.CMD}" ${A.COMPILER.C.ELF.FLAGS} -mmcu\=${A.BUILD.MCU} ${A.COMPILER.C.ELF.EXTRA_FLAGS} -o "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.elf" ${A.OBJECT_FILES} "${A.BUILD.PATH}/${A.ARCHIVE_FILE}" "-L${A.BUILD.PATH}" -lm
@@ -241,13 +241,13 @@ environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.CPP.O.P
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.CPP.O.PATTERN/value="${A.COMPILER.PATH}${A.COMPILER.CPP.CMD}" ${A.COMPILER.CPP.FLAGS} -mmcu\=${A.BUILD.MCU} -DF_CPU\=${A.BUILD.F_CPU} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DARDUINO_${A.BUILD.BOARD} -DARDUINO_ARCH_${A.BUILD.ARCH} ${A.COMPILER.CPP.EXTRA_FLAGS} ${A.BUILD.EXTRA_FLAGS} ${A.INCLUDES} "${A.SOURCE_FILE}" -o "${A.OBJECT_FILE}"
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.EEP.PATTERN.1/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.EEP.PATTERN.1/operation=replace
-environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.EEP.PATTERN.1/value="C\:\\Tools\\sloeber\\/arduinoPlugin/packages/arduino/tools/avr-gcc/5.4.0-atmel3.6.1-arduino2/bin/avr-objcopy" -O ihex -j .eeprom --set-section-flags\=.eeprom\=alloc,load --no-change-warnings --change-section-lma .eeprom\=0 "C\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\dcc-servo-incl-detach-251-256/Release/DccServoMega328P.elf" "C\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\dcc-servo-incl-detach-251-256/Release/DccServoMega328P.eep"
+environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.EEP.PATTERN.1/value="C\:\\Tools\\sloeber\\/arduinoPlugin/packages/arduino/tools/avr-gcc/5.4.0-atmel3.6.1-arduino2/bin/avr-objcopy" -O ihex -j .eeprom --set-section-flags\=.eeprom\=alloc,load --no-change-warnings --change-section-lma .eeprom\=0 "C\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\software/Release/DccServoMega328P.elf" "C\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\software/Release/DccServoMega328P.eep"
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.EEP.PATTERN/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.EEP.PATTERN/operation=replace
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.EEP.PATTERN/value="${A.COMPILER.PATH}${A.COMPILER.OBJCOPY.CMD}" ${A.COMPILER.OBJCOPY.EEP.FLAGS} ${A.COMPILER.OBJCOPY.EEP.EXTRA_FLAGS} "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.elf" "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.eep"
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.HEX.PATTERN.1/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.HEX.PATTERN.1/operation=replace
-environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.HEX.PATTERN.1/value="C\:\\Tools\\sloeber\\/arduinoPlugin/packages/arduino/tools/avr-gcc/5.4.0-atmel3.6.1-arduino2/bin/avr-objcopy" -O ihex -R .eeprom "C\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\dcc-servo-incl-detach-251-256/Release/DccServoMega328P.elf" "C\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\dcc-servo-incl-detach-251-256/Release/DccServoMega328P.hex"
+environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.HEX.PATTERN.1/value="C\:\\Tools\\sloeber\\/arduinoPlugin/packages/arduino/tools/avr-gcc/5.4.0-atmel3.6.1-arduino2/bin/avr-objcopy" -O ihex -R .eeprom "C\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\software/Release/DccServoMega328P.elf" "C\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\software/Release/DccServoMega328P.hex"
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.HEX.PATTERN/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.HEX.PATTERN/operation=replace
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.OBJCOPY.HEX.PATTERN/value="${A.COMPILER.PATH}${A.COMPILER.ELF2HEX.CMD}" ${A.COMPILER.ELF2HEX.FLAGS} ${A.COMPILER.ELF2HEX.EXTRA_FLAGS} "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.elf" "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.hex"
@@ -277,7 +277,7 @@ environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.S.O.PAT
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.S.O.PATTERN/value="${A.COMPILER.PATH}${A.COMPILER.C.CMD}" ${A.COMPILER.S.FLAGS} -mmcu\=${A.BUILD.MCU} -DF_CPU\=${A.BUILD.F_CPU} -DARDUINO\=${A.RUNTIME.IDE.VERSION} -DARDUINO_${A.BUILD.BOARD} -DARDUINO_ARCH_${A.BUILD.ARCH} ${A.COMPILER.S.EXTRA_FLAGS} ${A.BUILD.EXTRA_FLAGS} ${A.INCLUDES} "${A.SOURCE_FILE}" -o "${A.OBJECT_FILE}"
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.SIZE.PATTERN.1/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.SIZE.PATTERN.1/operation=replace
-environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.SIZE.PATTERN.1/value="C\:\\Tools\\sloeber\\/arduinoPlugin/packages/arduino/tools/avr-gcc/5.4.0-atmel3.6.1-arduino2/bin/avr-size" -A "C\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\dcc-servo-incl-detach-251-256/Release/DccServoMega328P.elf"
+environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.SIZE.PATTERN.1/value="C\:\\Tools\\sloeber\\/arduinoPlugin/packages/arduino/tools/avr-gcc/5.4.0-atmel3.6.1-arduino2/bin/avr-size" -A "C\:\\Git\\ArduinoMega328DccServo\\trunk\\work\\software/Release/DccServoMega328P.elf"
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.SIZE.PATTERN/delimiter=;
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.SIZE.PATTERN/operation=replace
 environment/project/io.sloeber.core.toolChain.release.313029778/A.RECIPE.SIZE.PATTERN/value="${A.COMPILER.PATH}${A.COMPILER.SIZE.CMD}" -A "${A.BUILD.PATH}/${A.BUILD.PROJECT_NAME}.elf"

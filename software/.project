@@ -47,6 +47,11 @@
 			<location>C:/Projects/ArduinoLibs/trunk/work/DCC_Decoder</location>
 		</link>
 		<link>
+			<name>libraries/NmraDcc</name>
+			<type>2</type>
+			<location>C:/Projects/ArduinoLibs/trunk/work/NmraDcc</location>
+		</link>
+		<link>
 			<name>libraries/Servo</name>
 			<type>2</type>
 			<locationURI>ECLIPSE_HOME/arduinoPlugin/libraries/Servo/1.1.7</locationURI>

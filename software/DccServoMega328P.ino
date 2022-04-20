@@ -1,3 +1,12 @@
+/***********************************************************************************************************************
+   I N C L U D E S
+ **********************************************************************************************************************/
+#include <NmraDcc.h>
+#include <Servo.h>
+
+/***********************************************************************************************************************
+   D E F I N E S
+ **********************************************************************************************************************/
 #define NUMSERVOS 8   // Enter the number of servos here
 #define SERVOSPEED 50 // [ms] between servo updates, lower is faster
 #define SERVO_DETACH_CNT 1000 / SERVOSPEED
@@ -6,11 +15,6 @@
 
 #define CV_SERVO_DATA_START 30
 #define CV_DECODER_MASTER_RESET 120
-
-// GO TO setup() TO CONFIGURE DCC ADDRESSES, PIN NUMBERS, SERVO ANGLES
-
-#include <NmraDcc.h>
-#include <Servo.h>
 
 unsigned long timetomove;
 
@@ -34,6 +38,10 @@ struct CVPair
     uint16_t CV;
     uint8_t Value;
 };
+
+/***********************************************************************************************************************
+   D A T A   D E C L A R A T I O N S (exported, local)
+ **********************************************************************************************************************/
 
 // clang-format off
 CVPair FactoryDefaultCVs [] =
@@ -89,6 +97,8 @@ bool RunLedLevel;
 
 uint8_t FactoryDefaultCVIndex = 0;
 
+/***********************************************************************************************************************
+ */
 void notifyCVResetFactoryDefault()
 {
     // Make FactoryDefaultCVIndex non-zero and equal to num CV's to be reset
@@ -96,6 +106,8 @@ void notifyCVResetFactoryDefault()
     FactoryDefaultCVIndex = sizeof(FactoryDefaultCVs) / sizeof(CVPair);
 }
 
+/***********************************************************************************************************************
+ */
 void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, uint8_t State)
 {
     State          = State;
@@ -134,7 +146,7 @@ void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, ui
             {
                 servo[Index].setpoint = servo[Index].offangle;
             }
-
+            Found                  = true;
             servo[Index].detachcnt = 0;
         }
         else
@@ -144,6 +156,8 @@ void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, ui
     }
 }
 
+/***********************************************************************************************************************
+ */
 void RunLed()
 {
     if (millis() >= (RunLedTimer + RUN_LED_TIME))
@@ -163,8 +177,38 @@ void RunLed()
     }
 }
 
-void CheckForCvUpdate() {}
+/***********************************************************************************************************************
+ */
+void CheckForCvUpdate()
+{
+    uint8_t Index;
 
+    for (Index = 0; Index < NUMSERVOS; Index++)
+    {
+        if (servo[Index].address != Dcc.getCV(CV_SERVO_DATA_START + (Index * 4)))
+        {
+            servo[Index].address = Dcc.getCV(CV_SERVO_DATA_START + (Index * 4));
+        }
+        if (servo[Index].offangle != Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 1)))
+        {
+            servo[Index].offangle = Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 1));
+            servo[Index].setpoint = servo[Index].offangle;
+            servo[Index].servo.attach(servo[Index].servoPin);
+            servo[Index].detachcnt = 0;
+        }
+
+        if (servo[Index].onangle != Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 2)))
+        {
+            servo[Index].onangle  = Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 2));
+            servo[Index].setpoint = servo[Index].onangle;
+            servo[Index].servo.attach(servo[Index].servoPin);
+            servo[Index].detachcnt = 0;
+        }
+    }
+}
+
+/***********************************************************************************************************************
+ */
 void setup()
 {
     uint8_t Index;
@@ -208,6 +252,8 @@ void setup()
     Dcc.init(MAN_ID_DIY, 1, FLAGS_OUTPUT_ADDRESS_MODE | FLAGS_DCC_ACCESSORY_DECODER, 0);
 }
 
+/***********************************************************************************************************************
+ */
 void loop()
 {
     // Call to library function that reads the DCC data
