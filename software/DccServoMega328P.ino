@@ -27,8 +27,8 @@ typedef struct
     uint16_t address; // User Configurable DCC address
     byte angle;       // Internal use current angle of servo
     byte setpoint;    // Internal use destination angle of servo
-    byte offangle;    // User Configurable servo angle for DCC state = 0
-    byte onangle;     // User Configurable servo angle for DCC state = 1
+    byte minangle;    // User Configurable servo angle for DCC state = 0
+    byte maxangle;    // User Configurable servo angle for DCC state = 1
     byte servoPin;
     byte detachcnt;
     Servo servo;
@@ -146,11 +146,11 @@ void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, ui
             }
             if (Enable)
             {
-                servo[Index].setpoint = servo[Index].onangle;
+                servo[Index].setpoint = servo[Index].maxangle;
             }
             else
             {
-                servo[Index].setpoint = servo[Index].offangle;
+                servo[Index].setpoint = servo[Index].minangle;
             }
             Found                  = true;
             servo[Index].detachcnt = 0;
@@ -184,6 +184,7 @@ void RunLed()
 }
 
 /***********************************************************************************************************************
+ * If a Cv value changed update data and when the min or max position is changed start moving servo to the new position.
  */
 void CheckForCvChanges()
 {
@@ -191,22 +192,26 @@ void CheckForCvChanges()
 
     for (Index = 0; Index < NUMSERVOS; Index++)
     {
+        // Address changed?
         if (servo[Index].address != Dcc.getCV(CV_SERVO_DATA_START + (Index * 4)))
         {
             servo[Index].address = Dcc.getCV(CV_SERVO_DATA_START + (Index * 4));
         }
-        if (servo[Index].offangle != Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 1)))
+
+        // Min position changed? If so move to new position.
+        if (servo[Index].minangle != Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 1)))
         {
-            servo[Index].offangle = Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 1));
-            servo[Index].setpoint = servo[Index].offangle;
+            servo[Index].minangle = Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 1));
+            servo[Index].setpoint = servo[Index].minangle;
             servo[Index].servo.attach(servo[Index].servoPin);
             servo[Index].detachcnt = 0;
         }
 
-        if (servo[Index].onangle != Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 2)))
+        // Max position changed? If so move to new position.
+        if (servo[Index].maxangle != Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 2)))
         {
-            servo[Index].onangle  = Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 2));
-            servo[Index].setpoint = servo[Index].onangle;
+            servo[Index].maxangle = Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 2));
+            servo[Index].setpoint = servo[Index].maxangle;
             servo[Index].servo.attach(servo[Index].servoPin);
             servo[Index].detachcnt = 0;
         }
@@ -226,10 +231,10 @@ void setup()
     for (Index = 0; Index < NUMSERVOS; Index++)
     {
         servo[Index].address  = Dcc.getCV(CV_SERVO_DATA_START + (Index * 4));
-        servo[Index].offangle = Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 1));
-        servo[Index].onangle  = Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 2));
+        servo[Index].minangle = Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 1));
+        servo[Index].maxangle = Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 2));
         servo[Index].servoPin = Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 3));
-        servo[Index].angle    = servo[Index].onangle;
+        servo[Index].angle    = servo[Index].maxangle;
         servo[Index].setpoint = servo[Index].angle;
         servo[Index].servo.write(servo[Index].angle);
         servo[Index].servo.attach(servo[Index].servoPin);
@@ -287,7 +292,7 @@ void loop()
         }
     }
 
-    // Move the servos when it is timetomove
+    // Move the servos when it is time to move
     if (millis() > timetomove)
     {
         timetomove = millis() + (unsigned long)SERVOSPEED;
