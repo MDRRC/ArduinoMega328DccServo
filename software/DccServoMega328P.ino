@@ -239,7 +239,7 @@ void setup()
         servo[Index].servo.write(servo[Index].angle);
         servo[Index].servo.attach(servo[Index].servoPin);
 
-        // After initial power on EEPROM contains 255, write CV value sinto EEPROM.
+        // After initial power on EEPROM contains 255, write CV values into EEPROM.
         // This prohibits the use of address 255.
         if (servo[Index].address == 255)
         {
@@ -275,7 +275,7 @@ void loop()
             digitalWrite(RUN_LED_PIN, LOW);
         }
 
-        // Small delay so led flashes fast indicating cv reset is going on.
+        // Small delay so led blinks fast indicating cv reset is going on.
         delay(100);
     }
     else
