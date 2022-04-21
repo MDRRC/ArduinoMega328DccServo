@@ -21562,16 +21562,16 @@ Source: www.kingbright.com</description>
 <part name="SUPPLY15" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="+5V/2" device=""/>
 <part name="IC3" library="atmel" library_urn="urn:adsk.eagle:library:105" deviceset="MEGA8-P" device="" package3d_urn="urn:adsk.eagle:package:4320/1" value="MEGA328-P"/>
 <part name="FRAME1" library="frames" library_urn="urn:adsk.eagle:library:229" deviceset="DINA3_L" device=""/>
-<part name="Q1" library="crystal" library_urn="urn:adsk.eagle:library:204" deviceset="CRYSTAL" device="HC49U-V" package3d_urn="urn:adsk.eagle:package:12075/1"/>
-<part name="C1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="025-024X044" package3d_urn="urn:adsk.eagle:package:23630/1"/>
-<part name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="025-024X044" package3d_urn="urn:adsk.eagle:package:23630/1"/>
-<part name="C4" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="050-024X044" package3d_urn="urn:adsk.eagle:package:23643/1"/>
+<part name="Q1" library="crystal" library_urn="urn:adsk.eagle:library:204" deviceset="CRYSTAL" device="HC49U-V" package3d_urn="urn:adsk.eagle:package:12075/1" value="16MHz"/>
+<part name="C1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="025-024X044" package3d_urn="urn:adsk.eagle:package:23630/1" value="33pF"/>
+<part name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="025-024X044" package3d_urn="urn:adsk.eagle:package:23630/1" value="33pF"/>
+<part name="C4" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="050-024X044" package3d_urn="urn:adsk.eagle:package:23643/1" value="100n"/>
 <part name="GND5" library="supply1" deviceset="GND" device=""/>
 <part name="P+3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="P+4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="R10" library="rcl" deviceset="R-EU_" device="0204/7" value="10k"/>
-<part name="C6" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="050-024X044" package3d_urn="urn:adsk.eagle:package:23643/1"/>
-<part name="C7" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="050-024X044" package3d_urn="urn:adsk.eagle:package:23643/1"/>
+<part name="C6" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="050-024X044" package3d_urn="urn:adsk.eagle:package:23643/1" value="100n"/>
+<part name="C7" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="050-024X044" package3d_urn="urn:adsk.eagle:package:23643/1" value="100n"/>
 <part name="P+5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
@@ -21794,7 +21794,7 @@ Source: www.kingbright.com</description>
 </instance>
 <instance part="Q1" gate="G$1" x="157.48" y="60.96" smashed="yes">
 <attribute name="NAME" x="160.02" y="61.976" size="1.778" layer="95"/>
-<attribute name="VALUE" x="160.02" y="58.42" size="1.778" layer="96"/>
+<attribute name="VALUE" x="154.94" y="55.88" size="1.778" layer="96"/>
 </instance>
 <instance part="C1" gate="G$1" x="162.56" y="48.26" smashed="yes">
 <attribute name="NAME" x="164.084" y="48.641" size="1.778" layer="95"/>
@@ -21826,8 +21826,8 @@ Source: www.kingbright.com</description>
 <attribute name="VALUE" x="136.144" y="43.561" size="1.778" layer="96"/>
 </instance>
 <instance part="C7" gate="G$1" x="177.8" y="48.26" smashed="yes">
-<attribute name="NAME" x="179.324" y="48.641" size="1.778" layer="95"/>
-<attribute name="VALUE" x="179.324" y="43.561" size="1.778" layer="96"/>
+<attribute name="NAME" x="179.324" y="51.181" size="1.778" layer="95"/>
+<attribute name="VALUE" x="179.324" y="48.641" size="1.778" layer="96"/>
 </instance>
 <instance part="P+5" gate="1" x="134.62" y="101.6" smashed="yes">
 <attribute name="VALUE" x="134.62" y="104.14" size="1.778" layer="96" rot="R180"/>
@@ -21868,8 +21868,8 @@ Source: www.kingbright.com</description>
 <attribute name="VALUE" x="127" y="33.02" size="1.778" layer="96" rot="MR0"/>
 </instance>
 <instance part="Q2" gate="1" x="81.28" y="185.42" smashed="yes" rot="R90">
-<attribute name="NAME" x="78.74" y="190.5" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="81.28" y="190.5" size="1.778" layer="96" rot="R90"/>
+<attribute name="NAME" x="81.28" y="193.04" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="86.36" y="190.5" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="SUPPLY7" gate="G$1" x="93.98" y="187.96" smashed="yes" rot="MR90">
 <attribute name="VALUE" x="97.79" y="187.325" size="1.778" layer="96" rot="MR180"/>
