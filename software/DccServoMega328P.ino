@@ -55,42 +55,42 @@ CVPair FactoryDefaultCVs [] =
   {CV_DECODER_MASTER_RESET, 0},
   {CV_SERVO_DATA_START,  1},  	// Acc decoder number 1
   {31,  2}, 	// Servo 1 position minimum.
-  {32,120}, 	// Servo 1 position maximum.
+  {32, 11}, 	// Servo 1 position maximum.
   {33,  8}, 	// Servo 1 pin.
 
   {34,	2},  	// Acc decoder number 2
   {35,	2}, 	// Servo 2 position minimum.
-  {36,120}, 	// Servo 2 position maximum.
+  {36, 10}, 	// Servo 2 position maximum.
   {37,  9}, 	// Servo 2 pin.
 
   {38,	3},  	// Acc decoder number 3
   {39,	2}, 	// Servo 3 position minimum.
-  {40,120}, 	// Servo 3 position maximum.
+  {40, 10}, 	// Servo 3 position maximum.
   {41, 10}, 	// Servo 3 pin.
 
   {42,	4},  	// Acc decoder number 4
   {43,	2}, 	// Servo 4 position minimum.
-  {44,120}, 	// Servo 4 position maximum.
+  {44, 10}, 	// Servo 4 position maximum.
   {45, 11}, 	// Servo 4 pin.
 
   {46,	5},  	// Acc decoder number 5
   {47,	2}, 	// Servo 5 position minimum.
-  {48,120}, 	// Servo 5 position maximum.
+  {48, 11}, 	// Servo 5 position maximum.
   {49, 12}, 	// Servo 5 pin.
 
   {50,	6},  	// Acc decoder number 6
   {51,	2}, 	// Servo 6 position minimum.
-  {52,120}, 	// Servo 6 position maximum.
+  {52, 11}, 	// Servo 6 position maximum.
   {53, 14}, 	// Servo 6 pin.
 
   {54,	7},  	// Acc decoder number 7
   {55,	2}, 	// Servo 7 position minimum.
-  {56,120}, 	// Servo 7 position maximum.
+  {56, 11}, 	// Servo 7 position maximum.
   {57, 18}, 	// Servo 7 pin.
 
   {58,	8},  	// Acc decoder number 8
   {59,	2}, 	// Servo 8 position minimum.
-  {60,120}, 	// Servo 8 position maximum.
+  {60, 11}, 	// Servo 8 position maximum.
   {61, 19}, 	// Servo 8 pin.
 };
 // clang-format on
