@@ -10,15 +10,15 @@ The decoder uses the [NMRA DCC Library](https://www.arduino.cc/reference/en/libr
 
 ## Programmning
  * Make sure the Atmel processor has the Arduino bootloader in it.
- * Connect a USB serial to TTL converter to  
+ * Connect a USB serial to TTL converter to X1.
  * Press the reset button and keep it pressed.
- * Press uoload in the IDE
- * Release the reset button
+ * Press upload in the IDE.
+ * Release the reset button.
  * Hex file is uploaded.
  * Change CV's according the CV numbers defined in FactoryDefaultCVs[] 
  
- At first time power on the default CV value are set. The led flashes fast, after CV's are written a reset will be performed. 
- When wrtiign CV value 8 a all CV valuesare writtne to there default values.  
+ At first time power on the default CV values are set. The led flashes fast, after CV's are written a reset will be performed. 
+ When writing CV value 8 all CV values are written to there default values.  
 
 ## License
 NONE! Feel free to use / change the source code, schematic and PCB data.
