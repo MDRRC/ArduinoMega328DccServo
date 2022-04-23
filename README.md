@@ -6,7 +6,7 @@ The processor itself must be programmed with a Arduino bootloader.
 
 ![](https://github.com/MDRRC/ArduinoMega328DccServo/blob/main/Hardware/servodecoder.PNG) 
  
-The decoder uses the [BMRA DCC Library](https://www.arduino.cc/reference/en/libraries/nmradcc/) and the design is based on the examples. 
+The decoder uses the [NMRA DCC Library](https://www.arduino.cc/reference/en/libraries/nmradcc/) and the design is based on the examples. 
 
 ## Programmning
  * Make sure the Atmel processor has the Arduino bootloader in it.
