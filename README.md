@@ -1,6 +1,6 @@
 # ArduinoMega328DccServo
 
-A DCC decoder for 8 servo's. Servo address and positions can be changed using CV's.
+A(nother) Arduino based DCC decoder for 8 servo's. Servo address and positions can be changed using CV's.
 It uses an Atmel Mega328P processor running at 16MHz. 
 The processor itself must be programmed with a Arduino bootloader and the fuses must be set to external xtal.
 
@@ -17,8 +17,8 @@ The decoder uses the [NMRA DCC Library](https://www.arduino.cc/reference/en/libr
  * Hex file is uploaded.
  * Change CV's according the CV numbers defined in FactoryDefaultCVs[] 
  
- At first time power on the default CV values are set. The led flashes fast, after CV's are written a reset will be performed. 
- When writing CV value 8 all CV values are written to there default values.  
+At first time power on the default CV values are set. The led flashes fast, after CV's are written a reset will be performed. 
+When writing CV value 8 all CV values are written to there default values.  
 
 ## License
 NONE! Feel free to use / change the source code, schematic and PCB data.
