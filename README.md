@@ -8,7 +8,7 @@ The processor itself must be programmed with a Arduino bootloader and the fuses 
  
 The decoder uses the [NMRA DCC Library](https://www.arduino.cc/reference/en/libraries/nmradcc/) and the design is based on the examples. 
 
-## Programmning
+## Programming
  * Make sure the Atmel processor has the Arduino bootloader in it.
  * Connect a USB serial to TTL converter to X1.
  * Press the reset button and keep it pressed.
@@ -19,6 +19,11 @@ The decoder uses the [NMRA DCC Library](https://www.arduino.cc/reference/en/libr
  
 At first time power on the default CV values are set. The led flashes fast, after CV's are written a reset will be performed. 
 When writing CV value 8 all CV values are written to there default values.  
+
+## Connecting 
+ * Supply voltage 9V to X20.
+ * DCC signal to X2.
+ * Servo's to Sv1 .. SV7 (servo connection is signal, supply voltage, ground).
 
 ## License
 NONE! Feel free to use / change the source code, schematic and PCB data.
