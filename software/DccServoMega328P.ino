@@ -12,6 +12,8 @@
 #define SERVO_DETACH_CNT 500 / SERVOSPEED
 #define RUN_LED_TIME 1000
 #define RUN_LED_PIN 4
+#define ENABLE_CONSOLE_PIN 7
+#define CONSOLE_BUFFER_RX_SIZE 30
 
 #define CV_SERVO_DATA_START 30
 #define CV_DECODER_MASTER_RESET 120
@@ -97,13 +99,20 @@ CVPair FactoryDefaultCVs [] =
 
 bool RunLedLevel                = true;
 bool PerformResetFactoryDefault = false;
+bool ConsoleMode                = false;
 uint32_t RunLedTimer            = millis();
 unsigned long timetomove        = 0;
 uint8_t FactoryDefaultCVIndex   = 0;
+uint8_t RxBufferIndex           = 0;
 
-DCCAccessoryData servo[NUMSERVOS];
 NmraDcc Dcc;
 DCC_MSG Packet;
+DCCAccessoryData servo[NUMSERVOS];
+char RxBufferSerial[CONSOLE_BUFFER_RX_SIZE];
+
+/***********************************************************************************************************************
+   F U N C T I O N S
+ **********************************************************************************************************************/
 
 void (*ResetFunc)(void) = 0;
 
@@ -220,6 +229,122 @@ void CheckForCvChanges()
 
 /***********************************************************************************************************************
  */
+static void ConsoleHelp()
+{
+    Serial.println("H       : Help");
+    Serial.println("L       : List CV values");
+    Serial.println("S xx yy : Set Cv xx to value yy");
+}
+
+/***********************************************************************************************************************
+ */
+static void ConsoleListCvValues()
+{
+    uint8_t Index;
+
+    for (Index = 0; Index < NUMSERVOS; Index++)
+    {
+        Serial.print(CV_SERVO_DATA_START + (Index * 4));
+        Serial.print(" ");
+        Serial.print(Dcc.getCV(CV_SERVO_DATA_START + (Index * 4)));
+        Serial.print(" ");
+        Serial.print(CV_SERVO_DATA_START + ((Index * 4) + 1));
+        Serial.print(" ");
+        Serial.print(Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 1)));
+        Serial.print(" ");
+        Serial.print(CV_SERVO_DATA_START + ((Index * 4) + 2));
+        Serial.print(" ");
+        Serial.println(Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 2)));
+    }
+}
+
+/***********************************************************************************************************************
+ */
+static void ConsoleSetCvValue(char* DataPtr)
+{
+    int Number;
+    int Value;
+    char* SpacePtr;
+    bool Succes = false;
+
+    // Locate space
+    SpacePtr = strchr(DataPtr, 32);
+    if (SpacePtr != NULL)
+    {
+        // Get CV number
+        SpacePtr++;
+        Number = atoi(SpacePtr);
+
+        // Get CV value
+        SpacePtr = strchr(SpacePtr, 32);
+        if (SpacePtr != NULL)
+        {
+            SpacePtr++;
+            Value = atoi(SpacePtr);
+
+            Dcc.setCV((uint16_t)(Number), (uint8_t)(Value));
+
+            Serial.print("CV Number : ");
+            Serial.print(Number);
+            Serial.print(" set to : ");
+            Serial.println(Value);
+
+            Succes = true;
+        }
+    }
+
+    if (Succes == false)
+    {
+        Serial.println("CV command entry not ok!!");
+    }
+}
+
+/***********************************************************************************************************************
+ */
+static void Console(char ByteRx)
+{
+    // Bounce data
+    Serial.print(ByteRx);
+
+    // When enter not pressed fill buffer and check for overrun buffer.
+    if (ByteRx != 0x0D)
+    {
+        RxBufferSerial[RxBufferIndex] = toUpperCase(ByteRx);
+        RxBufferIndex++;
+
+        if (RxBufferIndex >= CONSOLE_BUFFER_RX_SIZE)
+        {
+            RxBufferIndex = 0;
+            memset(RxBufferSerial, 0, CONSOLE_BUFFER_RX_SIZE);
+        }
+    }
+    else
+    {
+        // Enter pressed, check first entry in buffer.
+        switch (RxBufferSerial[0])
+        {
+        case 'H':
+            // List help screen.
+            ConsoleHelp();
+            break;
+        case 'L':
+            // List CV data.
+            ConsoleListCvValues();
+            break;
+        case 'S':
+            // Set CV value.
+            ConsoleSetCvValue(RxBufferSerial);
+            break;
+        default: Serial.println("Unknown command..."); break;
+        }
+
+        RxBufferIndex = 0;
+        memset(RxBufferSerial, 0, CONSOLE_BUFFER_RX_SIZE);
+    }
+}
+
+/***********************************************************************************************************************
+ */
 void setup()
 {
     uint8_t Index;
@@ -250,14 +375,37 @@ void setup()
     // Init DCC module.
     Dcc.pin(0, 2, 1);
     Dcc.init(MAN_ID_DIY, 1, FLAGS_OUTPUT_ADDRESS_MODE | FLAGS_DCC_ACCESSORY_DECODER, 0);
+
+    // Init serial port and console related items.
+    Serial.begin(57600);
+    Serial.println("DccServoMega328P");
+
+    pinMode(ENABLE_CONSOLE_PIN, INPUT);
+    digitalWrite(ENABLE_CONSOLE_PIN, HIGH);
+
+    RxBufferIndex = 0;
+    memset(RxBufferSerial, 0, CONSOLE_BUFFER_RX_SIZE);
 }
 
 /***********************************************************************************************************************
  */
 void loop()
 {
+    int ByteRx = 0;
+
     // Call to library function that reads the DCC data
     Dcc.process();
+
+    if (digitalRead(ENABLE_CONSOLE_PIN) == LOW)
+    {
+        // Console active...
+        ByteRx = Serial.read();
+        if (ByteRx > 0)
+        {
+            // read the incoming byte:
+            Console((char)(ByteRx));
+        }
+    }
 
     if (FactoryDefaultCVIndex && Dcc.isSetCVReady())
     {
