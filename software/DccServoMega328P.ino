@@ -407,6 +407,8 @@ void loop()
         }
     }
 
+    Dcc.process();
+
     if (FactoryDefaultCVIndex && Dcc.isSetCVReady())
     {
         FactoryDefaultCVIndex--; // Decrement first as initially it is the size of the array
@@ -439,6 +441,8 @@ void loop()
             CheckForCvChanges();
         }
     }
+
+    Dcc.process();
 
     // Move the servos when it is time to move
     if (millis() > timetomove)
