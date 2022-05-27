@@ -1,6 +1,6 @@
 # ArduinoMega328DccServo
 
-A(nother) Arduino based DCC decoder for 8 servo's. Servo address and positions can be changed using CV's.
+A(nother) Arduino based DCC decoder for 8 servo's. Servo address and positions can be changed using CV's or by a terminal program.
 It uses an Atmel Mega328P processor running at 16MHz. 
 The processor itself must be programmed with a Arduino bootloader and the fuses must be set to external xtal.
 
