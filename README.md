@@ -34,9 +34,16 @@ To list or chamge CV values
 ![](https://github.com/MDRRC/ArduinoMega328DccServo/blob/main/Hardware/cvset.PNG)
 
  * If the entered command is not ok message CV command entry not ok!! will appear.
+ 
+![](https://github.com/MDRRC/ArduinoMega328DccServo/blob/main/Hardware/cvnok.PNG)
+ 
  * To list the CV values press L <ENTER> 
 
 ![](https://github.com/MDRRC/ArduinoMega328DccServo/blob/main/Hardware/cvlist.PNG)
+
+ * Press H <ENTER> for minimal help screen.
+ 
+![](https://github.com/MDRRC/ArduinoMega328DccServo/blob/main/Hardware/help.PNG)
  
 
 ## License
