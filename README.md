@@ -25,6 +25,20 @@ When writing CV value 8 all CV values are written to there default values.
  * DCC signal to X2.
  * Servo's to Sv1 .. SV7 (servo connection is signal, supply voltage, ground).
 
+## Simple console
+To list or chamge CV values 
+ * Connect a serial terminal and set baudrate to 57600
+ * Pull pin 7 (CONS in schematic)m to ground using jumper JP1
+ * To change a CV value enter S xx yy <ENTER> where xx the CV nummer is and yy the value.
+
+![](https://github.com/MDRRC/ArduinoMega328DccServo/blob/main/Hardware/cvset.PNG)
+
+ * If the entered command is not ok message CV command entry not ok!! will appear.
+ * To list the CV values press L <ENTER> 
+
+![](https://github.com/MDRRC/ArduinoMega328DccServo/blob/main/Hardware/cvlist.PNG)
+ 
+
 ## License
 NONE! Feel free to use / change the source code, schematic and PCB data.
 PCB's are NOT sold, so if you want a PCB just order the PCB's yourself. 
