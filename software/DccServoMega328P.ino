@@ -238,23 +238,48 @@ static void ConsoleHelp()
 
 /***********************************************************************************************************************
  */
+static void ConsoleWriteWithSpaces(int Value)
+{
+    String text;
+    int Length;
+    uint8_t Index;
+
+    text   = String(Value);
+    Length = text.length();
+    for (Index = 0; Index < (4 - Length); Index++)
+    {
+        Serial.print(" ");
+    }
+    Serial.print(text);
+}
+
+/***********************************************************************************************************************
+ */
 static void ConsoleListCvValues()
 {
     uint8_t Index;
 
+    Serial.println("CV Address  CV  Min   CV   Max  CV   Pin");
+    Serial.println("----------------------------------------");
+
     for (Index = 0; Index < NUMSERVOS; Index++)
     {
-        Serial.print(CV_SERVO_DATA_START + (Index * 4));
+        ConsoleWriteWithSpaces(CV_SERVO_DATA_START + (Index * 4));
         Serial.print(" ");
-        Serial.print(Dcc.getCV(CV_SERVO_DATA_START + (Index * 4)));
+        ConsoleWriteWithSpaces(Dcc.getCV(CV_SERVO_DATA_START + (Index * 4)));
         Serial.print(" ");
-        Serial.print(CV_SERVO_DATA_START + ((Index * 4) + 1));
+        ConsoleWriteWithSpaces(CV_SERVO_DATA_START + ((Index * 4) + 1));
         Serial.print(" ");
-        Serial.print(Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 1)));
+        ConsoleWriteWithSpaces(Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 1)));
         Serial.print(" ");
-        Serial.print(CV_SERVO_DATA_START + ((Index * 4) + 2));
+        ConsoleWriteWithSpaces(CV_SERVO_DATA_START + ((Index * 4) + 2));
         Serial.print(" ");
-        Serial.println(Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 2)));
+        ConsoleWriteWithSpaces(Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 2)));
+        Serial.print(" ");
+        ConsoleWriteWithSpaces(CV_SERVO_DATA_START + ((Index * 4) + 3));
+        Serial.print(" ");
+        ConsoleWriteWithSpaces(Dcc.getCV(CV_SERVO_DATA_START + ((Index * 4) + 3)));
+        Serial.println();
     }
 }
 
