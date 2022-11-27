@@ -21,8 +21,8 @@ At first time power on the default CV values are set. The led flashes fast, afte
 When writing CV value 8 all CV values are written to there default values.  
 
 ## Connecting 
- * Supply voltage 9V to X20.
- * DCC signal to X2.
+ * Supply voltage 9V to X2.
+ * DCC signal to X20.
  * Servo's to Sv1 .. SV7 (servo connection is signal, supply voltage, ground).
 
 ## Simple console
