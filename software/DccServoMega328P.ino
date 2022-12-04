@@ -127,6 +127,100 @@ void notifyCVResetFactoryDefault()
 }
 
 /***********************************************************************************************************************
+ * Check if a POM (Programming On Main) message for acc. decoders is present.
+ * 10AAAAAA 0 1AAACDDD 0 (1110CCVV 0 VVVVVVVV 0 DDDDDDDD) 0 EEEEEEEE 1
+ *
+ * 81 F0 EC 1 3 9F -> Address 1 CV 2 Value 3
+ * 83 F0 EC 3 5 99 -> Address 3 CV 4 Value 5
+ * BA C0 EC 5 7 94 -> Address 250 CV6 Value 7
+ *
+ * ONLY tested with MDRRC-II.
+ *
+ */
+void notifyDccMsg(DCC_MSG* Msg)
+{
+    uint16_t Address  = 0;
+    uint16_t CvNumber = 0;
+    uint8_t CvValue   = 0;
+    uint8_t Temp      = 0;
+    bool Found        = false;
+    uint8_t Index     = 0;
+
+    // Check if bytes contain POM command data.
+    if (((Msg->Data[0] & 0b11000000) == 0b10000000) && ((Msg->Data[1] & 0b10000000) == 0b10000000))
+    {
+        if ((Msg->Data[2] & 0b11110000) == 0b11100000)
+        {
+            // Yep, get data.
+            Address = (Msg->Data[0]) & 0b00111111;
+            Temp    = Msg->Data[1] & 0b01110000;
+            Temp ^= 0b01110000;
+            Address |= (uint16_t(Temp << 2));
+
+            Temp     = Msg->Data[2] & 0b00000011;
+            CvNumber = (uint16_t)(Temp) << 8;
+            CvNumber |= Msg->Data[3];
+            CvNumber++;
+
+            CvValue = Msg->Data[4];
+
+            Serial.print(Address);
+            Serial.print(" ");
+            Serial.print(CvNumber);
+            Serial.print(" ");
+            Serial.println(CvValue);
+
+            // Check if address is known, if so update CV value.
+            while ((Found == false) && (Index < NUMSERVOS))
+            {
+                if (Address == servo[Index].address)
+                {
+                	Serial.print("Address : ");
+                	Serial.print(Address);
+                	Serial.print(" ");
+                	Serial.print(Index);
+
+                    switch (CvNumber)
+                    {
+                    case 1:
+                        // Address
+                    	Serial.print(" Address changed to : ");
+                    	Serial.print(Address);
+
+                        Dcc.setCV(CV_SERVO_DATA_START + (Index * 4), CvValue);
+                        break;
+                    case 2:
+                        // Min angle
+                    	Serial.print(" Min angle ");
+                    	Serial.print(((Index * 4) + 1));
+                    	Serial.print(" ");
+                    	Serial.print(CvValue);
+
+                        Dcc.setCV(CV_SERVO_DATA_START + ((Index * 4) + 1), CvValue);
+                        break;
+                    case 3:
+                        // Max angle
+                    	Serial.print(" Max angle ");
+                    	Serial.print(((Index * 4) + 1));
+                    	Serial.print(" ");
+                    	Serial.print(CvValue);
+
+                        Dcc.setCV(CV_SERVO_DATA_START + ((Index * 4) + 2), CvValue);
+                        break;
+                    }
+                    Found = true;
+                }
+                else
+                {
+                    Index++;
+                }
+            }
+            Serial.println();
+        }
+    }
+}
+
+/***********************************************************************************************************************
  */
 void notifyDccAccState(uint16_t Addr, uint16_t BoardAddr, uint8_t OutputAddr, uint8_t State)
 {
