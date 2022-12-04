@@ -6,7 +6,8 @@ The processor itself must be programmed with a Arduino bootloader and the fuses 
 
 ![](https://github.com/MDRRC/ArduinoMega328DccServo/blob/main/Hardware/servodecoder.PNG) 
  
-The decoder uses the [NMRA DCC Library](https://www.arduino.cc/reference/en/libraries/nmradcc/) and the design is based on the examples. 
+The decoder uses the [NMRA DCC Library](https://www.arduino.cc/reference/en/libraries/nmradcc/) and the design is based on the examples.
+Adress range is limited to 255.  
 
 ## Programming
  * Make sure the Atmel processor has the Arduino bootloader in it.
