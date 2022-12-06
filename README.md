@@ -43,10 +43,17 @@ To list or chamge CV values
 ![](https://github.com/MDRRC/ArduinoMega328DccServo/blob/main/Hardware/cvlist.PNG)
 
  * Press H <ENTER> for minimal help screen.
- 
-![](https://github.com/MDRRC/ArduinoMega328DccServo/blob/main/Hardware/help.PNG)
- 
 
+![](https://github.com/MDRRC/ArduinoMega328DccServo/blob/main/Hardware/help.PNG)
+
+
+## POM programming 
+Test only with MDRRC-II.
+ * Enter the address of the servo to be changed 
+   * Enter CV number 1 to change the address.
+   * Enter CV Number 2 to change the minimum angle of the servo
+   * Enter CV number 3 to change the maximum angle of the servo.
+  s
 ## License
 NONE! Feel free to use / change the source code, schematic and PCB data.
 PCB's are NOT sold, so if you want a PCB just order the PCB's yourself. 
