@@ -54,11 +54,14 @@ To list or chamge CV values
 ## POM programming 
 Test only with [MDRRC-II](https://robertdotevers.wordpress.com/134-2/) Menu TO -> POM when MDRRC-II is on.
  * Connect the decoder to the main track (no need for programming track). 
-   * Enter the address of the servo to be changed 
+   * Enter the address of the servo to be changed. 
    * Enter CV number 1 to change the address.
    * Enter CV Number 2 to change the minimum angle of the servo
    * Enter CV number 3 to change the maximum angle of the servo.
  * Enter the value 
+
+Yes, you do not need to enter the CV values as shown in an image above. Just 1, 2, or 3.
+ 
 ## License
 NONE! Feel free to use / change the source code, schematic and PCB data.
 PCB's are NOT sold, so if you want a PCB just order the PCB's yourself. 
